@@ -6,12 +6,14 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
+import java.nio.file.FileVisitOption;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Arrays;
+import java.util.EnumSet;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -50,7 +52,7 @@ public class Main {
 
         private static void listAll(Path p, final String[] containTxts, final OutputStream out) throws IOException {
             try (final OutputStreamWriter writer = new OutputStreamWriter(out);) {
-                Files.walkFileTree(p, new SimpleFileVisitor<Path>(){
+                Files.walkFileTree(p, EnumSet.of(FileVisitOption.FOLLOW_LINKS), 10, new SimpleFileVisitor<Path>(){
                     @Override
                     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
                         System.out.println("visit:" + file);
