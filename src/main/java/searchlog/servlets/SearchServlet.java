@@ -20,7 +20,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class SearchServlet extends HttpServlet {
+    
+    private static final Logger logger = LoggerFactory.getLogger(SearchServlet.class);
     private static final long serialVersionUID = -482662427030753953L;
 
     @Override
@@ -31,6 +36,7 @@ public class SearchServlet extends HttpServlet {
         resp.setContentType("text/html");
         resp.setStatus(HttpServletResponse.SC_OK);
         File folder = new File("logs");
+        logger.info("search folder:{}", folder);
         listAll(folder.toPath(), matches, resp.getOutputStream());
     }
 

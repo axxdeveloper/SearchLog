@@ -16,6 +16,12 @@
       </includes>
     </fileSet>
     <fileSet>
+      <directory>${project.build.scriptSourceDirectory}</directory>
+      <outputDirectory>/</outputDirectory>
+      <filtered>true</filtered>
+      <lineEnding>unix</lineEnding>
+    </fileSet>
+    <fileSet>
       <directory>${project.build.directory}</directory>
       <outputDirectory>/lib</outputDirectory>
       <includes>
