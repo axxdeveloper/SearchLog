@@ -39,9 +39,6 @@ public class SearchServlet extends HttpServlet {
             Files.walkFileTree(p, EnumSet.of(FileVisitOption.FOLLOW_LINKS), 10, new SimpleFileVisitor<Path>(){
                 @Override
                 public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-                    if ( !file.endsWith(".log") ) {
-                        return FileVisitResult.CONTINUE;
-                    }
                     System.out.println("visit:" + file);
                     boolean logFileFound = false;
                     try (BufferedReader reader = Files.newBufferedReader( file, Charset.forName("UTF8"))) {
