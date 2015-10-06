@@ -9,6 +9,7 @@ import java.nio.file.FileVisitOption;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Arrays;
@@ -41,11 +42,18 @@ public class SearchServlet extends HttpServlet {
         listAll(conf.getLogsPath(), matches, resp.getOutputStream());
     }
 
+    public static void main(String[] params) {
+        System.out.println(Paths.get("test.log").toFile().getName().endsWith(".log"));
+    }
+    
     private static void listAll(Path p, final String[] containTxts, final OutputStream out) throws IOException {
         try (final OutputStreamWriter writer = new OutputStreamWriter(out);) {
             Files.walkFileTree(p, EnumSet.of(FileVisitOption.FOLLOW_LINKS), 10, new SimpleFileVisitor<Path>(){
                 @Override
                 public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                    if ( !file.toFile().getName().endsWith(".log") ) {
+                        return super.visitFile(file, attrs);
+                    }
                     System.out.println("visit:" + file);
                     boolean logFileFound = false;
                     try (BufferedReader reader = Files.newBufferedReader( file, Charset.forName("UTF8"))) {
