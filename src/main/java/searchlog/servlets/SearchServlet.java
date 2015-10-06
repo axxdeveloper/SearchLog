@@ -1,7 +1,6 @@
 package searchlog.servlets;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -23,6 +22,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import searchlog.Configuration;
+
 public class SearchServlet extends HttpServlet {
     
     private static final Logger logger = LoggerFactory.getLogger(SearchServlet.class);
@@ -35,9 +36,9 @@ public class SearchServlet extends HttpServlet {
         System.out.println(Arrays.toString(matches));
         resp.setContentType("text/html");
         resp.setStatus(HttpServletResponse.SC_OK);
-        File folder = new File("logs");
-        logger.info("search folder:{}", folder);
-        listAll(folder.toPath(), matches, resp.getOutputStream());
+        Configuration conf = Configuration.getInstance();
+        logger.info("search folder:{}", conf.getLogsPath().toFile().getAbsolutePath());
+        listAll(conf.getLogsPath(), matches, resp.getOutputStream());
     }
 
     private static void listAll(Path p, final String[] containTxts, final OutputStream out) throws IOException {
