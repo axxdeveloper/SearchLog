@@ -42,10 +42,6 @@ public class SearchServlet extends HttpServlet {
         listAll(conf.getLogsPath(), matches, resp.getOutputStream());
     }
 
-    public static void main(String[] params) {
-        System.out.println(Paths.get("test.log").toFile().getName().endsWith(".log"));
-    }
-    
     private static void listAll(Path p, final String[] containTxts, final OutputStream out) throws IOException {
         try (final OutputStreamWriter writer = new OutputStreamWriter(out);) {
             Files.walkFileTree(p, EnumSet.of(FileVisitOption.FOLLOW_LINKS), 10, new SimpleFileVisitor<Path>(){

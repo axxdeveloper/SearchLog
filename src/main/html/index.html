@@ -4,20 +4,27 @@
 
 </head>
 <body>
-	
-	<input type="text" name="match" />
-	<input type="button" id="go" value="go" />
     
-	<div id="result"></div> 
+    <input type="text" name="match" />
+    <input type="button" id="go" value="go" />
     
-	<script language="javascript">
-	$("#go").click(function(){
-		var matchVal = $("input[name='match']").val();
-        alert(matchVal);
-		$.get( "/search?match=" + matchVal, function( data ) {
-		  $( "#result" ).html( data );
-		});	
-	});
-	</script>
+    <div id="result"></div> 
+    
+    <script language="javascript">
+    $(document).keypress(function(e) {
+        if(e.which == 13) {
+            search();
+        }
+    });
+    $("#go").click(function(){
+        search();
+    });
+    function search() {
+        var matchVal = $("input[name='match']").val();
+        $.get( "/search?match=" + matchVal, function( data ) {
+          $( "#result" ).html( data );
+        });     
+    }
+    </script>
 </body>
 </html>
